@@ -1,4 +1,5 @@
 import {resetEffects} from './effect';
+
 const fileField = document.querySelector('#upload-file');
 const chancelButton = document.querySelector('#upload-cancel');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -73,8 +74,27 @@ form.addEventListener('click', () => {
   pristine.validate();
 });
 
-buttonUpload.addEventListener('click', (evt) => {
-  pristine.validate();
-  evt.preventDefault();
-});
+const blockSubmitButton = () => {
+  buttonUpload.disabled = true;
+  buttonUpload.textContent = 'Отправляю...';
+};
 
+const unblockSubmitButton = () => {
+  buttonUpload.disabled = false;
+  buttonUpload.textContent = 'Опубликовать';
+};
+
+const initFormValidation = (onSubmit) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await onSubmit(new FormData(form));
+      unblockSubmitButton();
+      closeForm();
+    }
+  });
+};
+
+export { initFormValidation };

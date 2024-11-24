@@ -3,6 +3,7 @@ import {showBigPicture} from './big-picture';
 const container = document.querySelector('.pictures');
 const pictureSample = document.querySelector('#picture').content.querySelector('.picture');
 const frag = document.createDocumentFragment();
+
 function renderPictures(pictures) {
   for(const picture of pictures){
     const pictureElement = createPictureElement(picture);

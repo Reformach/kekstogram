@@ -4,8 +4,8 @@ const comments = document.querySelector('.social__comments');
 const deleteButton = bigPicture.querySelector('#picture-cancel');
 const commentLoader = document.querySelector('.comments-loader');
 const commentsCounter = document.querySelector('.social__comment-shown-count');
-const COMMENTS_PER_PORTION = 5;
 
+const COMMENTS_PER_PORTION = 5;
 let commentsShown = 0;
 let commentsList = [];
 
@@ -21,19 +21,25 @@ const createComments = (comment) => {
 };
 
 const renderComments = () => {
+  comments.innerHTML = '';
+
   commentsShown += COMMENTS_PER_PORTION;
+
   if(commentsShown >= commentsList.length) {
     commentLoader.classList.add('hidden');
     commentsShown = commentsList.length;
     commentsCounter.textContent = commentsShown;
-  }else{
+  }
+  else{
     commentLoader.classList.remove('hidden');
     commentsCounter.textContent = commentsShown;
   }
+
   for(let i = 0; i < commentsShown; i++){
     const commentElement = createComments(commentsList[i]);
     comments.appendChild(commentElement);
   }
+
 };
 
 const hideBigPicture = () => {
@@ -68,7 +74,6 @@ const showBigPicture = (data) => {
   commentsList = data.comments;
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  comments.innerHTML = '';
   renderPictureDetails(data);
   commentsShown = 0;
   renderComments();
