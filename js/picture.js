@@ -5,6 +5,7 @@ const pictureSample = document.querySelector('#picture').content.querySelector('
 const frag = document.createDocumentFragment();
 
 function renderPictures(pictures) {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   for(const picture of pictures){
     const pictureElement = createPictureElement(picture);
     frag.appendChild(pictureElement);

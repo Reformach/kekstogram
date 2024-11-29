@@ -9,6 +9,27 @@ const commentField = document.querySelector('.text__description');
 const checkHashTags = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const buttonUpload = document.querySelector('#upload-submit');
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const photoPreview = document.querySelector('.img-upload__preview img');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
+
+
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+const onFileInputChange = () => {
+  const file = fileField.files[0];
+  if (file && isValidType(file)) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    });    
+  }
+  showModal();
+};
+
 const onEscDown = () => {
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
@@ -63,7 +84,7 @@ function hideModal (){
 }
 
 fileField.addEventListener('change', () => {
-  showModal();
+  onFileInputChange();
 });
 
 chancelButton.addEventListener('click', () =>{
@@ -97,4 +118,6 @@ const initFormValidation = (onSubmit) => {
   });
 };
 
-export { initFormValidation };
+
+
+export { initFormValidation};

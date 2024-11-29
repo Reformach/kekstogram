@@ -2,14 +2,18 @@ import{renderPictures} from './picture';
 import {} from './form';
 import {} from './effect';
 import { getData, sendData } from './api.js';
-import { initFormValidation } from './form.js';
+import { initFormValidation} from './form.js';
+import { turnFilterOn, filterPictures } from './filter.js';
+import {} from './scale'
 
-const onLoadSuccess = (data) => {
-    renderPictures(data);
+const onGetDataSuccess = (data) => {
+  turnFilterOn(data);
+  renderPictures(filterPictures());
 };
 
+
 const onLoadError = (error) => {
-    const errorElement = document.createElement('div');
+    errorElement = document.createElement('div');
     errorElement.style.position = 'fixed';
     errorElement.style.top = '0';
     errorElement.style.left = '0';
@@ -22,7 +26,7 @@ const onLoadError = (error) => {
     document.body.appendChild(errorElement);
 };
 
-getData(onLoadSuccess, onLoadError);
+getData(onGetDataSuccess, onLoadError);
 
 const onSendDataSuccess = () => {
     alert('Форма успешно отправлена!');
